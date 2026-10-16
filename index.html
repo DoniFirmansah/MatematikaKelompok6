@@ -1,0 +1,2378 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Presentasi Kelompok 6 — Lembah Senja (XII PPLG)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-outer: #E6E1D6;
+      --bg-slide: #FAF7F2;
+      --bg-card: #FFFFFF;
+      --bg-muted: #F0ECE3;
+      --ink-dark: #182022;
+      --ink-mid: #424F52;
+      --ink-light: #738082;
+      --border: #D5CFC2;
+      --border-dark: #948C7E;
+      --rust: #C04A22;
+      --rust-bg: #FBE9E2;
+      --teal: #1E5E55;
+      --teal-bg: #E0F2EF;
+      --amber: #B07216;
+      --amber-bg: #FDF2DF;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-outer);
+      color: var(--ink-dark);
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* BAR ATAS */
+    .topbar {
+      height: 50px;
+      background: var(--ink-dark);
+      color: #FAF7F2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 24px;
+      flex-shrink: 0;
+    }
+
+    .topbar-title {
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .topbar-title span {
+      background: var(--rust);
+      color: #FFF;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .slide-nav-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .dot-btn {
+      background: #2B3639;
+      color: #B0BEC5;
+      border: 1px solid #3E4C50;
+      padding: 4px 11px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 11.5px;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .dot-btn.active {
+      background: #FAF7F2;
+      color: var(--ink-dark);
+      border-color: #FAF7F2;
+    }
+
+    .topbar-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .action-btn {
+      background: #2B3639;
+      color: #FAF7F2;
+      border: 1px solid #4A5A5E;
+      padding: 5px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .action-btn:hover {
+      background: var(--rust);
+      border-color: var(--rust);
+    }
+
+    /* AREA SLIDE UTAMA */
+    .stage-wrap {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px 24px;
+      overflow: hidden;
+    }
+
+    .slide {
+      width: 100%;
+      max-width: 1420px;
+      height: 100%;
+      max-height: 820px;
+      background: var(--bg-slide);
+      border: 1px solid var(--border-dark);
+      border-radius: 10px;
+      box-shadow: 0 14px 40px rgba(24, 32, 34, 0.12);
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 28px 40px 22px;
+      overflow: hidden;
+    }
+
+    .slide.active {
+      display: flex;
+      animation: fadeIn 0.2s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* HEADER SLIDE */
+    .slide-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-bottom: 2px solid var(--ink-dark);
+      padding-bottom: 10px;
+      margin-bottom: 16px;
+      flex-shrink: 0;
+    }
+
+    .speaker-tag {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--rust);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 3px;
+    }
+
+    .slide-head h2 {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: 34px;
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--ink-dark);
+    }
+
+    /* BODY SLIDE */
+    .slide-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow-y: auto;
+    }
+
+    /* FOOTER SLIDE */
+    .slide-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+      padding-top: 10px;
+      margin-top: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--ink-light);
+      flex-shrink: 0;
+    }
+
+    /* GRID & KARTU */
+    .grid-2 { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 24px; height: 100%; align-items: center; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+
+    .card.top-rust { border-top: 4px solid var(--rust); }
+    .card.top-teal { border-top: 4px solid var(--teal); }
+    .card.top-amber { border-top: 4px solid var(--amber); }
+    .card.top-dark { border-top: 4px solid var(--ink-dark); }
+
+    .card h3 {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: 25px;
+      font-weight: 400;
+      color: var(--ink-dark);
+    }
+
+    .card p {
+      font-size: 13.5px;
+      color: var(--ink-mid);
+      line-height: 1.55;
+    }
+
+    .coord-box {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12.5px;
+      background: var(--bg-muted);
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      border-radius: 6px;
+      color: var(--ink-dark);
+      line-height: 1.6;
+    }
+
+    .tag-pill {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      align-self: flex-start;
+    }
+    .tag-pill.awal { background: #E2E6E8; color: #1E2426; }
+    .tag-pill.translasi { background: var(--rust-bg); color: var(--rust); }
+    .tag-pill.refleksi { background: var(--teal-bg); color: var(--teal); }
+    .tag-pill.dilatasi { background: var(--amber-bg); color: var(--amber); }
+
+    /* SLIDE 1 COVER */
+    .hero-title {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: 52px;
+      font-weight: 400;
+      line-height: 1.06;
+      margin: 10px 0 14px;
+      color: var(--ink-dark);
+    }
+
+    .hero-desc {
+      font-size: 15px;
+      color: var(--ink-mid);
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+
+    .member-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .member-item {
+      background: var(--bg-slide);
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .member-num {
+      background: var(--ink-dark);
+      color: #FFF;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* SLIDE 2 LAYOUT: KARTU OBJEK AWAL + KANVAS MINI */
+    .slide2-split {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .mini-cards-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      justify-content: space-between;
+    }
+
+    .mini-obj-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .mini-obj-card:hover, .mini-obj-card.active {
+      border-color: var(--rust);
+      box-shadow: 0 4px 14px rgba(192, 74, 34, 0.12);
+      transform: translateX(3px);
+    }
+
+    .mini-obj-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .mini-obj-head h3 {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--ink-dark);
+    }
+
+    .mini-canvas-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .mini-canvas-holder {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      max-height: 310px;
+      background: #0D1726;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--border-dark);
+    }
+
+    /* SLIDE 4 KANVAS INTERAKTIF + FULLSCREEN MODE */
+    .demo-grid {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 14px;
+      height: 100%;
+      align-items: stretch;
+    }
+
+    .canvas-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    /* KETIKA KANVAS DI-FULLSCREEN */
+    .canvas-panel:fullscreen {
+      background: #070D17;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .canvas-panel:fullscreen .canvas-controls {
+      background: rgba(15, 23, 34, 0.95);
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      color: #FFF;
+    }
+
+    .canvas-panel:fullscreen .stage-btn {
+      background: #1E293B;
+      color: #CBD5E1;
+      border-color: #334155;
+    }
+
+    .canvas-panel:fullscreen .stage-btn.active {
+      background: var(--rust);
+      color: #FFF;
+      border-color: var(--rust);
+    }
+
+    .canvas-panel:fullscreen .canvas-holder {
+      max-height: calc(100vh - 175px);
+      width: auto;
+      height: 100%;
+      aspect-ratio: 16 / 9;
+      border: 1px solid #334155;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+    }
+
+    .canvas-panel:fullscreen .transform-banner {
+      background: #0F172A;
+      color: #F8FAFC;
+      border-color: #334155;
+      border-left: 4px solid var(--rust);
+    }
+
+    .canvas-panel:fullscreen .tb-formula {
+      background: #1E293B;
+      color: #FCD34D;
+      border-color: #475569;
+    }
+
+    .canvas-panel:fullscreen .status-bar-bottom {
+      color: #94A3B8 !important;
+    }
+
+    /* BAR PINTASAN KEYBOARD (DOCK 1-10) & FLOATING MENU DI KANVAS */
+    .fs-quickbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      background: var(--bg-muted);
+      border: 1px solid var(--border);
+      padding: 5px 10px;
+      border-radius: 6px;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+    }
+
+    .canvas-panel:fullscreen .fs-quickbar {
+      background: rgba(15, 23, 34, 0.95);
+      border-color: #334155;
+      color: #E2E8F0;
+    }
+
+    .key-pills-wrap {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .key-obj-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--ink-dark);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.12s;
+    }
+
+    .key-obj-btn kbd {
+      background: var(--ink-dark);
+      color: #FFF;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+
+    .key-obj-btn:hover, .key-obj-btn.active {
+      background: var(--rust);
+      color: #FFF;
+      border-color: var(--rust);
+    }
+
+    .key-obj-btn.active kbd, .key-obj-btn:hover kbd {
+      background: #FFF;
+      color: var(--rust);
+    }
+
+    .canvas-panel:fullscreen .key-obj-btn {
+      background: #1E293B;
+      color: #E2E8F0;
+      border-color: #334155;
+    }
+
+    .canvas-panel:fullscreen .key-obj-btn.active,
+    .canvas-panel:fullscreen .key-obj-btn:hover {
+      background: var(--rust);
+      color: #FFF;
+      border-color: var(--rust);
+    }
+
+    /* MENU MELAYANG (FLOATING DRAWER) DI DALAM KANVAS SAAT FULLSCREEN / NORMAL */
+    .fs-floating-drawer {
+      position: absolute;
+      top: 105px;
+      right: 22px;
+      bottom: 48px;
+      width: 340px;
+      background: rgba(15, 23, 34, 0.96);
+      backdrop-filter: blur(10px);
+      border: 1px solid #475569;
+      border-radius: 8px;
+      padding: 12px;
+      z-index: 60;
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.55);
+      color: #F8FAFC;
+    }
+
+    .fs-floating-drawer.open {
+      display: flex;
+      animation: fadeIn 0.15s ease-out;
+    }
+
+    .fs-drawer-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .fs-drawer-item {
+      background: #1E293B;
+      border: 1px solid #334155;
+      color: #F1F5F9;
+      padding: 8px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      text-align: left;
+      font-size: 11.5px;
+      transition: all 0.12s;
+    }
+
+    .fs-drawer-item:hover, .fs-drawer-item.active {
+      background: #273549;
+      border-color: #FF7043;
+      box-shadow: inset 3px 0 0 #FF7043;
+    }
+
+    .canvas-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .stage-btn {
+      background: var(--bg-muted);
+      border: 1px solid var(--border);
+      color: var(--ink-mid);
+      padding: 5px 10px;
+      font-size: 11.5px;
+      font-weight: 600;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .stage-btn.active {
+      background: var(--ink-dark);
+      color: #FFF;
+      border-color: var(--ink-dark);
+    }
+
+    .btn-canvas-fs {
+      background: var(--rust);
+      color: #FFF;
+      border: none;
+      padding: 5px 12px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 11.5px;
+      font-weight: 700;
+      border-radius: 5px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .btn-canvas-fs:hover { opacity: 0.9; }
+
+    .btn-menu-toggle {
+      background: var(--teal);
+      color: #FFF;
+      border: none;
+      padding: 5px 11px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 11.5px;
+      font-weight: 700;
+      border-radius: 5px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .btn-menu-toggle:hover { opacity: 0.92; }
+
+    /* BANNER PENJELAS TRANSFORMASI DI ATAS KANVAS */
+    .transform-banner {
+      background: var(--bg-muted);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--rust);
+      padding: 6px 12px;
+      border-radius: 5px;
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 12px;
+    }
+
+    .tb-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tb-formula {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      font-weight: 600;
+      background: var(--bg-card);
+      color: var(--ink-dark);
+      padding: 2px 8px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+
+    .canvas-holder {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      max-height: 375px;
+      background: #0D1726;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid var(--border-dark);
+      margin: 0 auto;
+      position: relative;
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      cursor: pointer;
+    }
+
+    .obj-side-list {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      overflow-y: auto;
+      max-height: 525px;
+    }
+
+    .obj-row-btn {
+      border: 1px solid var(--border);
+      background: var(--bg-slide);
+      padding: 7px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: left;
+      font-size: 11.5px;
+      transition: all 0.12s;
+    }
+
+    .obj-row-btn:hover, .obj-row-btn.active {
+      background: #FFF;
+      border-color: var(--rust);
+      box-shadow: inset 3px 0 0 var(--rust);
+    }
+
+    /* TABEL SLIDE 5 */
+    .clean-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      background: var(--bg-card);
+    }
+
+    .clean-table th, .clean-table td {
+      border: 1px solid var(--border);
+      padding: 6.5px 10px;
+      text-align: left;
+    }
+
+    .clean-table th {
+      background: var(--bg-muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+    }
+
+    /* PANEL TEKS BICARA (N) */
+    .script-drawer {
+      position: fixed;
+      bottom: 54px;
+      left: 28px;
+      right: 28px;
+      max-width: 1400px;
+      margin: 0 auto;
+      background: rgba(24, 32, 34, 0.96);
+      color: #FAF7F2;
+      border: 1px solid #4A5A5E;
+      border-radius: 8px;
+      padding: 16px 22px;
+      z-index: 100;
+      display: none;
+      box-shadow: 0 -8px 25px rgba(0,0,0,0.2);
+    }
+
+    .script-drawer.show { display: block; }
+
+    .script-speaker {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      color: #FCD34D;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    .script-text {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #F1F5F9;
+      white-space: pre-line;
+      max-height: 180px;
+      overflow-y: auto;
+    }
+
+    /* BAR BAWAH */
+    .bottombar {
+      height: 46px;
+      background: var(--bg-card);
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 24px;
+      flex-shrink: 0;
+    }
+
+    .nav-btn {
+      background: var(--ink-dark);
+      color: #FFF;
+      border: none;
+      padding: 6px 16px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 12.5px;
+      font-weight: 600;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .nav-btn:disabled {
+      background: var(--border);
+      color: var(--ink-light);
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BAR ATAS -->
+  <header class="topbar">
+    <div class="topbar-title">
+      <span>KELOMPOK 6</span>
+      <div>Matematika Kelas XII PPLG · SMK Negeri 9 Semarang</div>
+    </div>
+
+    <div class="slide-nav-dots">
+      <button class="dot-btn active" onclick="goSlide(1)">1. Pengantar</button>
+      <button class="dot-btn" onclick="goSlide(2)">2. Objek Awal</button>
+      <button class="dot-btn" onclick="goSlide(3)">3. Transformasi</button>
+      <button class="dot-btn" onclick="goSlide(4)">4. Visual Kanvas</button>
+      <button class="dot-btn" onclick="goSlide(5)">5. Tabel Analisis</button>
+      <button class="dot-btn" onclick="goSlide(6)">6. Kesimpulan</button>
+    </div>
+
+    <div class="topbar-actions">
+      <button class="action-btn" onclick="toggleScript()">Teks Bicara (N)</button>
+      <button class="action-btn" onclick="toggleFull()">Layar Penuh Slide (F)</button>
+    </div>
+  </header>
+
+  <!-- AREA SLIDE -->
+  <main class="stage-wrap">
+
+    <!-- ================================================================== -->
+    <!-- SLIDE 1 — PEMBUKAAN & PENGANTAR PROYEK                             -->
+    <!-- ================================================================== -->
+    <section class="slide active" data-index="1">
+      <div class="slide-head">
+        <div>
+          <div class="speaker-tag">Bagian 1 · Pembukaan & Pengenalan Proyek</div>
+          <h2>Membuat Background Game dengan Kombinasi Transformasi</h2>
+        </div>
+      </div>
+
+      <div class="slide-content">
+        <div class="grid-2">
+          <div>
+            <span class="tag-pill translasi">TEMA DUNIA FANTASI: "LEMBAH SENJA"</span>
+            <h1 class="hero-title">Background Game 2D: Lembah Senja</h1>
+            <p class="hero-desc">
+              Desain latar belakang game yang menggambarkan <strong>gunung</strong>, <strong>bintang</strong>, dan <strong>mercusuar di tepi danau</strong>. Proyek ini menunjukkan bahwa materi transformasi geometri dapat diterapkan langsung dalam pembuatan desain digital.
+            </p>
+
+            <div class="card top-dark" style="padding: 16px 20px;">
+              <strong style="font-size: 14px; color: var(--ink-dark);">Apa itu Transformasi Geometri?</strong>
+              <p style="font-size: 13.5px;">
+                Perubahan pada suatu bangun datar—misalnya menggeser posisinya, mencerminkannya, atau mengubah ukurannya—menggunakan 3 jenis transformasi: <strong>Translasi</strong>, <strong>Refleksi</strong>, dan <strong>Dilatasi</strong>.
+              </p>
+            </div>
+          </div>
+
+          <div class="card top-rust" style="gap: 14px;">
+            <div>
+              <span class="tag-pill awal">TIM PENYUSUN</span>
+              <h3 style="margin-top: 6px;">Kelompok 6 — Kelas XII PPLG</h3>
+              <p style="font-size: 13px;">SMK Negeri 9 Semarang</p>
+            </div>
+
+            <div class="member-list">
+              <div class="member-item"><span class="member-num">1</span> Doni</div>
+              <div class="member-item"><span class="member-num">2</span> Rayya</div>
+              <div class="member-item"><span class="member-num">3</span> Chico</div>
+              <div class="member-item"><span class="member-num">4</span> Akbar</div>
+            </div>
+
+            <div class="coord-box" style="font-size: 12px;">
+              <strong>Rincian Objek Desain:</strong><br>
+              • 3 Bangun Datar Awal (Segitiga, Belah Ketupat, Persegi Panjang)<br>
+              • 7 Objek Hasil Transformasi (Translasi, Refleksi, Dilatasi)<br>
+              • Total 10 Objek Geometris pada Bidang Kartesius
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-foot">
+        <span>KELOMPOK 6 · MEMBUAT BACKGROUND GAME DENGAN KOMBINASI TRANSFORMASI</span>
+        <span>SLIDE 1 / 6</span>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- SLIDE 2 — 3 OBJEK AWAL & PRATINJAU KANVAS MINI                     -->
+    <!-- ================================================================== -->
+    <section class="slide" data-index="2">
+      <div class="slide-head" style="margin-bottom: 12px;">
+        <div>
+          <div class="speaker-tag">Bagian 2 · Bangun Datar Dasar (Objek Awal)</div>
+          <h2>Tiga Objek Awal & Peran Koordinat Kartesius</h2>
+        </div>
+      </div>
+
+      <div class="slide-content" style="gap: 14px;">
+        <div class="slide2-split">
+          <!-- KIRI: 3 KARTU OBJEK AWAL (KLIK UNTUK HIGHLIGHT DI KANVAS MINI) -->
+          <div class="mini-cards-stack">
+            <div class="mini-obj-card card top-teal" id="miniCard-1" onclick="focusMiniObj(1)">
+              <div class="mini-obj-head">
+                <h3>1. Gunung Utama</h3>
+                <span class="tag-pill awal">Objek Awal 1 · Segitiga</span>
+              </div>
+              <p style="font-size: 12.5px; color: var(--ink-mid);">
+                Bentuk dasar gunung utama di tepi danau. Nantinya akan digeser (translasi) dan dicerminkan (refleksi).
+              </p>
+              <div class="coord-box" style="padding: 6px 10px; font-size: 12px;">
+                <strong>Titik Sudut:</strong> A(1, 1) · B(5, 1) · C(3, 5)
+              </div>
+            </div>
+
+            <div class="mini-obj-card card top-amber" id="miniCard-7" onclick="focusMiniObj(7)">
+              <div class="mini-obj-head">
+                <h3>2. Bintang Kecil</h3>
+                <span class="tag-pill awal">Objek Awal 2 · Belah Ketupat</span>
+              </div>
+              <p style="font-size: 12.5px; color: var(--ink-mid);">
+                Bentuk dasar bintang kecil di langit. Nantinya akan diperbesar (dilatasi) menjadi bintang besar.
+              </p>
+              <div class="coord-box" style="padding: 6px 10px; font-size: 12px;">
+                <strong>Titik Sudut:</strong> D(2, 6) · E(3, 7) · F(2, 8) · G(1, 7)
+              </div>
+            </div>
+
+            <div class="mini-obj-card card top-rust" id="miniCard-9" onclick="focusMiniObj(9)">
+              <div class="mini-obj-head">
+                <h3>3. Mercusuar Kanan</h3>
+                <span class="tag-pill awal">Objek Awal 3 · Persegi Panjang</span>
+              </div>
+              <p style="font-size: 12.5px; color: var(--ink-mid);">
+                Bentuk dasar mercusuar di tepi kanan. Nantinya akan dicerminkan (refleksi) ke sisi kiri.
+              </p>
+              <div class="coord-box" style="padding: 6px 10px; font-size: 12px;">
+                <strong>Titik Sudut:</strong> H(11, 1) · I(12, 1) · J(12, 6) · K(11, 6)
+              </div>
+            </div>
+          </div>
+
+          <!-- KANAN: PRATINJAU KANVAS MINI KHUSUS 3 OBJEK AWAL -->
+          <div class="mini-canvas-box">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+              <div>
+                <span class="tag-pill refleksi" style="font-size:10px;">PRATINJAU BIDANG KARTESIUS (KUADRAN I)</span>
+                <div style="font-size:13px; font-weight:700; color:var(--ink-dark); margin-top:2px;">Posisi 3 Bangun Datar Awal</div>
+              </div>
+              <div style="display:flex; gap:4px;">
+                <button class="stage-btn active" id="btnMiniAll" onclick="focusMiniObj(null)" style="padding:4px 8px; font-size:11px;">Semua (3)</button>
+                <button class="stage-btn" id="btnMini-1" onclick="focusMiniObj(1)" style="padding:4px 8px; font-size:11px;">Segitiga</button>
+                <button class="stage-btn" id="btnMini-7" onclick="focusMiniObj(7)" style="padding:4px 8px; font-size:11px;">Belah Ketupat</button>
+                <button class="stage-btn" id="btnMini-9" onclick="focusMiniObj(9)" style="padding:4px 8px; font-size:11px;">Persegi Panjang</button>
+              </div>
+            </div>
+
+            <div class="mini-canvas-holder">
+              <canvas id="miniCanvas" width="900" height="560"></canvas>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--ink-mid);">
+              <span id="miniStatus">Klik kartu di kiri atau bangun di kanvas untuk menyorot titik sudut</span>
+              <span id="miniCursor">Koordinat: (0, 0)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- KOTAK PENJELASAN FUNGSI KOORDINAT -->
+        <div class="card top-dark" style="flex-direction: row; align-items: center; justify-content: space-between; gap: 20px; padding: 12px 18px;">
+          <div>
+            <strong style="font-size: 14px; color: var(--ink-dark);">Mengapa Kami Menggunakan Koordinat?</strong>
+            <p style="font-size: 13px; margin-top: 2px;">
+              Koordinat menunjukkan posisi setiap titik pada bidang Kartesius. Dengan koordinat, kami bisa menghitung ke mana titik-titik akan berpindah setelah mengalami transformasi—sehingga posisi objek berubah sesuai perhitungan matematika.
+            </p>
+          </div>
+          <div class="coord-box" style="flex-shrink: 0; font-size: 11.5px; padding: 8px 12px;">
+            Titik Awal (x, y) → Rumus Transformasi → Titik Hasil (x', y')
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-foot">
+        <span>KELOMPOK 6 · TIGA OBJEK AWAL & BIDANG KARTESIUS</span>
+        <span>SLIDE 2 / 6</span>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- SLIDE 3 — 3 JENIS TRANSFORMASI GEOMETRI                            -->
+    <!-- ================================================================== -->
+    <section class="slide" data-index="3">
+      <div class="slide-head">
+        <div>
+          <div class="speaker-tag">Bagian 3 · Proses & Aturan Matematika</div>
+          <h2>Tiga Jenis Transformasi Geometri yang Digunakan</h2>
+        </div>
+      </div>
+
+      <div class="slide-content" style="gap: 16px;">
+        <div class="grid-3">
+          <!-- TRANSLASI -->
+          <div class="card top-rust">
+            <span class="tag-pill translasi">1. Translasi (Pergeseran)</span>
+            <h3>Menggeser Posisi</h3>
+            <p>Memindahkan bangun tanpa mengubah bentuk dan ukurannya.</p>
+            <div class="coord-box">
+              <strong>Aturan:</strong> (x, y) → (x + a, y + b)<br><br>
+              <strong>Contoh Gunung Kanan T(5,0):</strong><br>
+              Titik A(1, 1) → A'(6, 1)<br>
+              <span style="font-size:11.5px; color:var(--ink-mid);">(Koordinat x ditambah 5, dan koordinat y tetap)</span><br><br>
+              <strong>Gunung Kiri T(-6,0):</strong><br>
+              Titik A(1, 1) → A''(-5, 1)
+            </div>
+          </div>
+
+          <!-- REFLEKSI -->
+          <div class="card top-teal">
+            <span class="tag-pill refleksi">2. Refleksi (Pencerminan)</span>
+            <h3>Mencerminkan Posisi</h3>
+            <p>Mengubah posisi bangun seperti bayangan pada cermin.</p>
+            <div class="coord-box">
+              <strong>• Terhadap Sumbu-X (Pantulan Danau):</strong><br>
+              Aturan: (x, y) → (x, -y)<br>
+              <span style="font-size:11.5px; color:var(--ink-mid);">(Koordinat x tetap, koordinat y berubah tanda)</span><br>
+              Contoh: C(3, 5) → C₁(3, -5)<br><br>
+              <strong>• Terhadap Sumbu-Y (Mercusuar Kiri):</strong><br>
+              Aturan: (x, y) → (-x, y)<br>
+              <span style="font-size:11.5px; color:var(--ink-mid);">(Koordinat x berubah tanda, koordinat y tetap)</span><br>
+              Contoh: H(11, 1) → H'(-11, 1)
+            </div>
+          </div>
+
+          <!-- DILATASI -->
+          <div class="card top-amber">
+            <span class="tag-pill dilatasi">3. Dilatasi (Perubahan Ukuran)</span>
+            <h3>Mengubah Ukuran</h3>
+            <p>Memperbesar bintang kecil menjadi bintang besar dengan faktor skala 2 dan pusat O(0,0).</p>
+            <div class="coord-box">
+              <strong>Aturan [O(0,0), k=2]:</strong><br>
+              (x, y) → (2x, 2y)<br><br>
+              <strong>Contoh pada Bintang Besar:</strong><br>
+              Titik D(2, 6) → D'(4, 12)<br>
+              <span style="font-size:11.5px; color:var(--ink-mid);">(Karena kedua koordinat dikalikan 2)</span><br>
+              E(3,7) → E'(6,14) | F(2,8) → F'(4,16)
+            </div>
+          </div>
+        </div>
+
+        <div class="card top-dark" style="padding: 13px 20px;">
+          <p style="font-size: 13.5px; color: var(--ink-dark);">
+            <strong>Perbedaan Ketiganya:</strong> <strong>Translasi</strong> menggeser posisi, <strong>Refleksi</strong> mencerminkan posisi, sedangkan <strong>Dilatasi</strong> mengubah ukuran berdasarkan faktor skala.
+          </p>
+        </div>
+      </div>
+
+      <div class="slide-foot">
+        <span>KELOMPOK 6 · TRANSLASI, REFLEKSI, DAN DILATASI</span>
+        <span>SLIDE 3 / 6</span>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- SLIDE 4 — VISUAL HASIL AKHIR + FULLSCREEN KANVAS & KEY SHORTCUTS   -->
+    <!-- ================================================================== -->
+    <section class="slide" data-index="4">
+      <div class="slide-head" style="margin-bottom: 8px; padding-bottom: 6px;">
+        <div>
+          <div class="speaker-tag">Bagian 4 · Hasil Akhir Desain Background Game</div>
+          <h2 style="font-size: 27px;">Visualisasi "Lembah Senja" (3 Objek Awal + 7 Hasil Transformasi = 10 Objek)</h2>
+        </div>
+      </div>
+
+      <div class="slide-content">
+        <div class="demo-grid">
+          <!-- PANEL KANVAS YANG BISA DI-FULLSCREEN BESERTA MENU & KEYBOARD BAR -->
+          <div class="canvas-panel" id="canvasFullscreenBox">
+            <div class="canvas-controls">
+              <div style="display:flex; gap:5px; flex-wrap:wrap;">
+                <button class="stage-btn" id="btnStage1" onclick="setCanvasStage(1)">1. Sebelum Transformasi (Q)</button>
+                <button class="stage-btn" id="btnStage2" onclick="setCanvasStage(2)">2. Proses & Rumus (W)</button>
+                <button class="stage-btn active" id="btnStage3" onclick="setCanvasStage(3)">3. Hasil Akhir 10 Objek (E)</button>
+              </div>
+              <div style="display:flex; gap:8px; align-items:center; font-size:11.5px; font-weight:600; flex-wrap:wrap;">
+                <label style="cursor:pointer;"><input type="checkbox" id="chkArt" checked onchange="renderScene()"> Detail Art</label>
+                <label style="cursor:pointer;"><input type="checkbox" id="chkGrid" checked onchange="renderScene()"> Grid</label>
+                <label style="cursor:pointer;"><input type="checkbox" id="chkCoords" checked onchange="renderScene()"> Koordinat</label>
+                <button class="btn-menu-toggle" onclick="toggleFsDrawer()">☰ Menu Objek (M)</button>
+                <button class="btn-canvas-fs" id="btnCanvasFs" onclick="toggleCanvasFullscreen()">⛶ Fullscreen Kanvas</button>
+              </div>
+            </div>
+
+            <!-- BAR PINTASAN KEYBOARD OBJEK 1 - 10 (AKTIF DI NORMAL & FULLSCREEN) -->
+            <div class="fs-quickbar">
+              <div class="key-pills-wrap" id="quickKeyBar"></div>
+              <button class="key-obj-btn" onclick="focusObj(null)" title="Reset Sorotan (Tombol R)">
+                <kbd>R</kbd> Reset Semua
+              </button>
+            </div>
+
+            <!-- BANNER JELAS TRANSFORMASI APA YANG SEDANG DILIHAT -->
+            <div class="transform-banner" id="transformBanner">
+              <div class="tb-left">
+                <span class="tag-pill awal" id="tbBadge">10 Objek Utuh</span>
+                <strong id="tbTitle">Seluruh Objek Lembah Senja (3 Objek Awal + 7 Hasil Transformasi)</strong>
+              </div>
+              <div class="tb-formula" id="tbFormula">Tekan tombol angka 1-9 / 0 di keyboard atau klik objek untuk sorotan detail</div>
+            </div>
+
+            <div class="canvas-holder">
+              <canvas id="mainCanvas" width="1920" height="1080"></canvas>
+            </div>
+
+            <!-- FLOATING DRAWER MENU OBJEK (BISA DIBUKA SAAT FULLSCREEN DENGAN TOMBOL M) -->
+            <div class="fs-floating-drawer" id="fsFloatingDrawer">
+              <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #334155; padding-bottom:8px;">
+                <div>
+                  <strong style="font-size:13px; color:#FFF;">Pilih Objek (1–10)</strong>
+                  <div style="font-size:10.5px; color:#94A3B8;">Gunakan Keyboard <kbd style="background:#334155; padding:1px 4px; border-radius:3px;">1</kbd>-<kbd style="background:#334155; padding:1px 4px; border-radius:3px;">0</kbd> atau <kbd style="background:#334155; padding:1px 4px; border-radius:3px;">[</kbd> <kbd style="background:#334155; padding:1px 4px; border-radius:3px;">]</kbd></div>
+                </div>
+                <div style="display:flex; gap:6px;">
+                  <button class="stage-btn" style="padding:3px 8px; font-size:10.5px;" onclick="focusObj(null)">Reset (R)</button>
+                  <button class="stage-btn" style="padding:3px 8px; font-size:10.5px; background:#C04A22; color:#FFF; border:none;" onclick="toggleFsDrawer()">✕ Tutup</button>
+                </div>
+              </div>
+              <div class="fs-drawer-list" id="fsDrawerList"></div>
+            </div>
+
+            <div class="status-bar-bottom" style="display:flex; justify-content:space-between; font-family:'JetBrains Mono'; font-size:11px; color:var(--ink-mid); padding-top:4px;">
+              <span id="statusInfo">Shortcut Keyboard: [1-9, 0] Pilih Objek 1-10 · [ [ / ] ] Prev/Next Objek · [M] Menu · [R] Reset</span>
+              <span id="cursorInfo">Koordinat Kursor: (0, 0)</span>
+            </div>
+          </div>
+
+          <!-- DAFTAR 10 OBJEK DI SAMPING KANAN -->
+          <div class="obj-side-list">
+            <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:6px; border-bottom:1px solid var(--border);">
+              <strong style="font-size:12.5px;">Daftar 10 Objek (Key 1–0)</strong>
+              <button class="stage-btn" style="padding:2px 8px; font-size:10.5px;" onclick="focusObj(null)">Reset (R)</button>
+            </div>
+            <div id="objectButtons" style="display:flex; flex-direction:column; gap:5px; overflow-y:auto;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-foot">
+        <span>KELOMPOK 6 · HASIL AKHIR DESAIN BACKGROUND GAME</span>
+        <span>SLIDE 4 / 6</span>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- SLIDE 5 — TABEL PEMERIKSAAN 10 OBJEK                               -->
+    <!-- ================================================================== -->
+    <section class="slide" data-index="5">
+      <div class="slide-head" style="margin-bottom: 12px;">
+        <div>
+          <div class="speaker-tag">Bagian 4 (Lanjutan) · Verifikasi Perhitungan</div>
+          <h2 style="font-size: 32px;">Tabel Analisis Koordinat 10 Objek Geometris</h2>
+        </div>
+      </div>
+
+      <div class="slide-content">
+        <table class="clean-table">
+          <thead>
+            <tr>
+              <th style="width: 38px;">No</th>
+              <th>Nama Objek</th>
+              <th>Bentuk Dasar</th>
+              <th>Objek Asal</th>
+              <th>Mengalami Transformasi Apa?</th>
+              <th>Aturan / Rumus</th>
+              <th>Koordinat Hasil</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="font-family:'JetBrains Mono'; font-weight:700;">1</td>
+              <td><strong>Gunung Utama</strong></td>
+              <td>Segitiga</td>
+              <td>- (Bangun Dasar 1)</td>
+              <td><span class="tag-pill awal">Objek Awal (Belum Ditransformasi)</span></td>
+              <td style="font-family:'JetBrains Mono';">Titik Asal</td>
+              <td style="font-family:'JetBrains Mono';"><strong>A(1,1), B(5,1), C(3,5)</strong></td>
+            </tr>
+            <tr>
+              <td style="font-family:'JetBrains Mono'; font-weight:700;">2</td>
+              <td><strong>Gunung Kanan</strong></td>
+              <td>Segitiga</td>
+              <td>Dari Objek 1 (Gunung Utama)</td>
+              <td><span class="tag-pill translasi">Translasi T(5,0) (Digeser 5 ke kanan)</span></td>
+              <td style="font-family:'JetBrains Mono';">(x, y) → (x + 5, y)</td>
+              <td style="font-family:'JetBrains Mono';"><strong>A'(6,1), B'(10,1), C'(8,5)</strong></td>
+            </tr>
+            <tr>
+              <td style="font-family:'JetBrains Mono'; font-weight:700;">3</td>
+              <td><strong>Gunung Kiri</strong></td>
+              <td>Segitiga</td>
+              <td>Dari Objek 1 (Gunung Utama)</td>
+              <td><span class="tag-pill translasi">Translasi T(-6,0) (Digeser 6 ke kiri)</span></td>
+              <td style="font-family:'JetBrains Mono';">(x, y) → (x - 6, y)</td>
+              <td style="font-family:'JetBrains Mono';"><strong>A''(-5,1), B''(-1,1), C''(-3,5)</strong></td>
+            </tr>
+            <tr>
+              <td style="font-family:'JetBrains Mono'; font-weight:700;">4</td>
+              <td><strong>Pantulan Gunung Utama</strong></td>
+              <td>Segitiga Terbalik</td>
+              <td>Dari Objek 1 (Gunung Utama)</td>
+              <td><span class="tag-pill refleksi">Refleksi Sumbu-X (Cermin Air Danau)</span></td>
+              <td style="font-family:'JetBrains Mono';">(x, y) → (x, -y)</td>
+              <td style="font-family:'JetBrains Mono';"><strong>A₁(1,-1), B₁(5,-1), C₁(3,-5)</strong></td>
+            </tr>
+            <tr>
+              <td style="font-family:'JetBrains Mono'; font-weight:700;">5</td>
+              <td><strong>Pantulan Gunung Kanan</strong></td>
+              <td>Segitiga Terbalik</td>
+              <td>Dari Objek 2 (Gunung Kanan)</td>
+              <td><span class="tag-pill refleksi">Refleksi Sumbu-X (Cermin Air Danau)</span></td>
+              <td style="font-family:'JetBrains Mono';">(x, y) → (x, -y)</td>
+              <td style="font-family:'JetBrains Mono';"><strong>A₂(6,-1), B₂(10,-1), C₂(8,-5)</strong></td>
+            </tr>
+            <tr>
+              <td style="font-family:'JetBrains Mono'; font-weight:700;">6</td>
+              <td><strong>Pantulan Gunung Kiri</strong></td>
+              <td>Segitiga Terbalik</td>
+              <td>Dari Objek 3 (Gunung Kiri)</td>
+              <td><span class="tag-pill refleksi">Refleksi Sumbu-X (Cermin Air Danau)</span></td>
+              <td style="font-family:'JetBrains Mono';">(x, y) → (x, -y)</td>
+              <td style="font-family:'JetBrains Mono';"><strong>A₃(-5,-1), B₃(-1,-1), C₃(-3,-5)</strong></td>
+            </tr>
+            <tr>
+              <td style="font-family:'JetBrains Mono'; font-weight:700;">7</td>
+              <td><strong>Bintang Kecil</strong></td>
+              <td>Belah Ketupat</td>
+              <td>- (Bangun Dasar 2)</td>
+              <td><span class="tag-pill awal">Objek Awal (Belum Ditransformasi)</span></td>
+              <td style="font-family:'JetBrains Mono';">Titik Asal</td>
+              <td style="font-family:'JetBrains Mono';"><strong>D(2,6), E(3,7), F(2,8), G(1,7)</strong></td>
+            </tr>
+            <tr>
+              <td style="font-family:'JetBrains Mono'; font-weight:700;">8</td>
+              <td><strong>Bintang Besar</strong></td>
+              <td>Belah Ketupat</td>
+              <td>Dari Objek 7 (Bintang Kecil)</td>
+              <td><span class="tag-pill dilatasi">Dilatasi Pusat O(0,0) Skala k = 2</span></td>
+              <td style="font-family:'JetBrains Mono';">(x, y) → (2x, 2y)</td>
+              <td style="font-family:'JetBrains Mono';"><strong>D'(4,12), E'(6,14), F'(4,16), G'(2,14)</strong></td>
+            </tr>
+            <tr>
+              <td style="font-family:'JetBrains Mono'; font-weight:700;">9</td>
+              <td><strong>Mercusuar Kanan</strong></td>
+              <td>Persegi Panjang</td>
+              <td>- (Bangun Dasar 3)</td>
+              <td><span class="tag-pill awal">Objek Awal (Belum Ditransformasi)</span></td>
+              <td style="font-family:'JetBrains Mono';">Titik Asal</td>
+              <td style="font-family:'JetBrains Mono';"><strong>H(11,1), I(12,1), J(12,6), K(11,6)</strong></td>
+            </tr>
+            <tr>
+              <td style="font-family:'JetBrains Mono'; font-weight:700;">10</td>
+              <td><strong>Mercusuar Kiri</strong></td>
+              <td>Persegi Panjang</td>
+              <td>Dari Objek 9 (Mercusuar Kanan)</td>
+              <td><span class="tag-pill refleksi">Refleksi Sumbu-Y (Cermin Tengah Lembah)</span></td>
+              <td style="font-family:'JetBrains Mono';">(x, y) → (-x, y)</td>
+              <td style="font-family:'JetBrains Mono';"><strong>H'(-11,1), I'(-12,1), J'(-12,6), K'(-11,6)</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="slide-foot">
+        <span>KELOMPOK 6 · TABEL ANALISIS TRANSFORMASI GEOMETRI</span>
+        <span>SLIDE 5 / 6</span>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- SLIDE 6 — KESIMPULAN & PENUTUP                                     -->
+    <!-- ================================================================== -->
+    <section class="slide" data-index="6">
+      <div class="slide-head">
+        <div>
+          <div class="speaker-tag">Bagian 5 · Kesimpulan & Penutup</div>
+          <h2>Kesimpulan Proyek Kelompok 6</h2>
+        </div>
+      </div>
+
+      <div class="slide-content" style="gap: 20px;">
+        <div class="grid-3">
+          <div class="card top-rust">
+            <span class="tag-pill translasi">Poin 1</span>
+            <h3>3 Objek Awal → 10 Objek</h3>
+            <p>
+              Dari 3 bangun datar awal (Segitiga, Belah Ketupat, dan Persegi Panjang), kami berhasil mengembangkan 7 objek tambahan melalui kombinasi Translasi, Refleksi, dan Dilatasi hingga menjadi 10 objek utuh.
+            </p>
+          </div>
+
+          <div class="card top-teal">
+            <span class="tag-pill refleksi">Poin 2</span>
+            <h3>Terstruktur dengan Rumus</h3>
+            <p>
+              Dengan memahami koordinat Kartesius dan tabel aturan transformasi, setiap titik objek dapat diperiksa kebenarannya sehingga pengembangan objek menjadi jauh lebih rapi dan terstruktur.
+            </p>
+          </div>
+
+          <div class="card top-amber">
+            <span class="tag-pill dilatasi">Poin 3</span>
+            <h3>Penerapan Desain Digital</h3>
+            <p>
+              Proyek ini membuktikan bahwa materi transformasi geometri tidak hanya dipakai untuk mengerjakan soal di buku, tetapi sangat berguna dalam pembuatan desain digital dan latar belakang game.
+            </p>
+          </div>
+        </div>
+
+        <div class="card top-dark" style="text-align: center; padding: 28px; align-items: center;">
+          <h3 style="font-size: 34px;">Terima Kasih atas Perhatian Bapak/Ibu Guru dan Teman-Teman</h3>
+          <p style="font-size: 14.5px; color: var(--ink-mid); max-width: 600px;">
+            Mohon maaf apabila terdapat kekurangan dalam penyampaian kami.<br>
+            <strong>Wassalamualaikum warahmatullahi wabarakatuh.</strong>
+          </p>
+        </div>
+      </div>
+
+      <div class="slide-foot">
+        <span>KELOMPOK 6 · PROYEK TRANSFORMASI GEOMETRI LEMBAH SENJA</span>
+        <span>SLIDE 6 / 6</span>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- PANEL TEKS BICARA -->
+  <aside class="script-drawer" id="scriptDrawer">
+    <div class="script-speaker" id="scriptSpeaker">TEKS BICARA</div>
+    <div class="script-text" id="scriptText"></div>
+  </aside>
+
+  <!-- BAR BAWAH -->
+  <footer class="bottombar">
+    <button class="nav-btn" id="prevBtn" onclick="stepSlide(-1)">← Sebelumnya</button>
+    <div style="font-family:'JetBrains Mono'; font-size:12px; color:var(--ink-mid);">
+      Panah <strong>← →</strong> : Slide | Angka <strong>1–9, 0</strong> : Pilih Objek 1–10 | <strong>M</strong> : Menu Objek | <strong>N</strong> : Teks Bicara
+    </div>
+    <button class="nav-btn" id="nextBtn" onclick="stepSlide(1)">Berikutnya →</button>
+  </footer>
+
+<script>
+  // NASKAH BICARA TANPA LABEL NAMA PEMATERI
+  const SCRIPTS = {
+    1: {
+      speaker: "BAGIAN 1 (Slide 1 — Pembukaan & Pengantar)",
+      text: `Assalamualaikum warahmatullahi wabarakatuh.\nSelamat pagi, Bapak/Ibu Guru dan teman-teman semuanya.\n\nKami dari kelompok 6 akan mempresentasikan proyek matematika kami yang berjudul “Membuat Background Game dengan Kombinasi Transformasi” dengan tema dunia fantasi yang kami beri nama “Lembah Senja”.\n\nPada proyek ini, kami membuat desain background game yang menggambarkan gunung, bintang, dan mercusuar di tepi danau.\nKami memilih tema ini karena ingin menunjukkan bahwa materi matematika, khususnya transformasi geometri, bisa diterapkan dalam pembuatan desain digital, bukan hanya digunakan untuk mengerjakan soal di buku.\n\nTransformasi geometri adalah perubahan pada suatu bangun, misalnya menggeser posisinya, mencerminkannya, atau mengubah ukurannya.\nDalam proyek ini, kami menggunakan tiga jenis transformasi, yaitu translasi, refleksi, dan dilatasi. Kami juga menggunakan bangun datar sebagai dasar untuk membuat objek-objek dalam desain.\n\nSelanjutnya, akan dijelaskan bangun datar yang kami gunakan sebagai objek awal.`
+    },
+    2: {
+      speaker: "BAGIAN 2 (Slide 2 — Tiga Bangun Datar Awal & Koordinat)",
+      text: `Terima kasih.\n\nSebelum masuk ke proses transformasi, kami akan menjelaskan tiga bangun datar yang menjadi objek awal dalam proyek kami.\n\nYang pertama adalah segitiga, yang kami gunakan sebagai bentuk dasar gunung utama. Titik-titik sudutnya adalah A(1,1), B(5,1), dan C(3,5).\n\nYang kedua adalah belah ketupat, yang kami gunakan sebagai bintang kecil. Titik-titik sudutnya adalah D(2,6), E(3,7), F(2,8), dan G(1,7).\n\nYang ketiga adalah persegi panjang, yang kami gunakan sebagai bentuk dasar mercusuar kanan. Titik-titik sudutnya adalah H(11,1), I(12,1), J(12,6), dan K(11,6).\n\nMungkin teman-teman bertanya, mengapa kami menggunakan koordinat?\nKoordinat digunakan untuk menunjukkan posisi setiap titik pada bidang Kartesius. Dengan koordinat tersebut, kami bisa menghitung ke mana titik-titik akan berpindah setelah mengalami transformasi.\nJadi, kami tidak mengubah posisi objek secara sembarangan. Kami menggunakan aturan matematika agar hasilnya sesuai dengan perhitungan.\n\nSelanjutnya, akan dijelaskan tiga jenis transformasi yang digunakan dalam proyek ini.`
+    },
+    3: {
+      speaker: "BAGIAN 3 (Slide 3 — Translasi, Refleksi, & Dilatasi)",
+      text: `Terima kasih.\n\nPada proyek ini, kami menggunakan tiga jenis transformasi geometri.\n\nYang pertama adalah translasi atau pergeseran. Translasi memindahkan bangun tanpa mengubah bentuk dan ukurannya.\nContohnya, gunung utama kami geser ke kanan dengan T(5,0). Titik A yang awalnya berada di koordinat (1,1) berubah menjadi (6,1), karena koordinat x ditambah 5 dan koordinat y tetap.\n\nYang kedua adalah refleksi atau pencerminan. Refleksi mengubah posisi bangun seperti bayangan pada cermin.\nKami menggunakan refleksi terhadap sumbu-X untuk membuat pantulan gunung di danau. Dalam aturan ini, koordinat x tetap, sedangkan koordinat y berubah tanda.\nKami juga menggunakan refleksi terhadap sumbu-Y untuk membuat mercusuar di sebelah kiri. Dalam aturan ini, koordinat x berubah tanda, sedangkan koordinat y tetap.\n\nYang ketiga adalah dilatasi atau perubahan ukuran. Kami memperbesar bintang kecil menjadi bintang besar menggunakan faktor skala 2 dan pusat O(0,0).\nContohnya, titik D yang awalnya berada di (2,6) berubah menjadi (4,12), karena kedua koordinat dikalikan 2.\n\nJadi, perbedaan ketiganya adalah translasi menggeser posisi, refleksi mencerminkan posisi, sedangkan dilatasi mengubah ukuran berdasarkan faktor skala.\nDengan ketiga transformasi ini, kami dapat mengembangkan objek awal menjadi beberapa objek tambahan dalam desain game.\n\nSelanjutnya, akan dijelaskan hasil akhir proyek kami.`
+    },
+    4: {
+      speaker: "BAGIAN 4 (Slide 4 — Hasil Akhir Visual Background Game)",
+      text: `Terima kasih.\n\nSekarang, kita masuk ke hasil akhir proyek kelompok kami, yaitu background game bertema Lembah Senja.\n\nDalam desain ini, kami menggunakan tiga objek awal, yaitu segitiga, belah ketupat, dan persegi panjang. Kemudian, kami menerapkan tiga jenis transformasi untuk menghasilkan objek tambahan.\n\nSecara keseluruhan, terdapat 10 objek geometris, yang terdiri dari 3 objek awal dan 7 objek hasil transformasi.`
+    },
+    5: {
+      speaker: "BAGIAN 4 LANJUTAN (Slide 5 — Tabel Pemeriksaan Koordinat)",
+      text: `Kami juga membuat tabel yang berisi nama objek, objek asal, jenis transformasi, aturan transformasi, dan koordinat hasilnya.\n\nTabel ini membantu kami memeriksa apakah posisi setiap titik sudah sesuai dengan rumus yang digunakan.`
+    },
+    6: {
+      speaker: "BAGIAN 5 (Slide 6 — Kesimpulan & Penutup)",
+      text: `Dari proyek ini, kami belajar bahwa transformasi geometri bisa diterapkan dalam pembuatan desain digital. Kami juga belajar bahwa dengan memahami koordinat dan aturan transformasi, kita dapat mengembangkan satu objek menjadi beberapa objek dengan cara yang lebih terstruktur.\n\nDemikian presentasi dari kelompok 6. Mohon maaf apabila terdapat kekurangan dalam penyampaian kami.\nTerima kasih atas perhatian Bapak/Ibu Guru dan teman-teman.\nWassalamualaikum warahmatullahi wabarakatuh.`
+    }
+  };
+
+  let curSlide = 1;
+  const maxSlide = 6;
+
+  function goSlide(n) {
+    curSlide = n;
+    document.querySelectorAll('.slide').forEach(s => {
+      s.classList.toggle('active', Number(s.dataset.index) === curSlide);
+    });
+    document.querySelectorAll('.dot-btn').forEach((b, i) => {
+      b.classList.toggle('active', i + 1 === curSlide);
+    });
+    document.getElementById('prevBtn').disabled = (curSlide === 1);
+    document.getElementById('nextBtn').disabled = (curSlide === maxSlide);
+
+    const sc = SCRIPTS[curSlide];
+    document.getElementById('scriptSpeaker').textContent = sc.speaker;
+    document.getElementById('scriptText').textContent = sc.text;
+
+    if (curSlide === 2) setTimeout(renderMiniScene, 20);
+    if (curSlide === 4) setTimeout(renderScene, 20);
+  }
+
+  function stepSlide(d) {
+    const next = curSlide + d;
+    if (next >= 1 && next <= maxSlide) goSlide(next);
+  }
+
+  function toggleScript() {
+    document.getElementById('scriptDrawer').classList.toggle('show');
+  }
+
+  function toggleFull() {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(() => {});
+    } else {
+      document.exitFullscreen();
+    }
+  }
+
+  // FUNGSI KHUSUS FULLSCREEN KANVAS DI SLIDE 4
+  function toggleCanvasFullscreen() {
+    const box = document.getElementById('canvasFullscreenBox');
+    if (!document.fullscreenElement) {
+      box.requestFullscreen().catch(() => {});
+    } else {
+      document.exitFullscreen();
+    }
+  }
+
+  function toggleFsDrawer() {
+    document.getElementById('fsFloatingDrawer').classList.toggle('open');
+  }
+
+  document.addEventListener('fullscreenchange', () => {
+    const btn = document.getElementById('btnCanvasFs');
+    if (!btn) return;
+    if (document.fullscreenElement === document.getElementById('canvasFullscreenBox')) {
+      btn.textContent = '✕ Keluar Fullscreen';
+    } else {
+      btn.textContent = '⛶ Fullscreen Kanvas';
+      document.getElementById('fsFloatingDrawer').classList.remove('open');
+    }
+    setTimeout(renderScene, 50);
+  });
+
+  // ============================================================================
+  // DATA 10 OBJEK GEOMETRIS LEMBAH SENJA
+  // ============================================================================
+  const OBJECTS = [
+    {
+      id: 1,
+      key: "1",
+      short: "Gunung Utama",
+      name: "1. Gunung Utama",
+      kind: "mountain",
+      type: "awal",
+      badge: "Objek Awal 1",
+      canvasLabel: "Obj 1 · Objek Awal (Segitiga)",
+      originDesc: "Bangun Dasar Pertama (Segitiga)",
+      transExplain: "Objek Awal (Belum mengalami transformasi)",
+      formula: "Titik Asal: A(1,1), B(5,1), C(3,5)",
+      color: "#2E6F65",
+      points: [{ label: "A", x: 1, y: 1, dx: -44, dy: -22 }, { label: "B", x: 5, y: 1, dx: -36, dy: -22 }, { label: "C", x: 3, y: 5, dx: 0, dy: -28 }]
+    },
+    {
+      id: 2,
+      key: "2",
+      short: "Gunung Kanan",
+      name: "2. Gunung Kanan",
+      kind: "mountain",
+      type: "translasi",
+      badge: "Translasi T(5,0)",
+      canvasLabel: "Obj 2 · Translasi T(5,0)",
+      originDesc: "Berasal dari Objek 1 (Gunung Utama)",
+      transExplain: "Mengalami TRANSLASI (Pergeseran) sejauh 5 satuan ke kanan T(5,0)",
+      formula: "Rumus: (x, y) → (x + 5, y)  |  A(1,1) → A'(6,1)",
+      color: "#3B8276",
+      points: [{ label: "A'", x: 6, y: 1, dx: 38, dy: -22 }, { label: "B'", x: 10, y: 1, dx: -38, dy: -22 }, { label: "C'", x: 8, y: 5, dx: 0, dy: -28 }]
+    },
+    {
+      id: 3,
+      key: "3",
+      short: "Gunung Kiri",
+      name: "3. Gunung Kiri",
+      kind: "mountain",
+      type: "translasi",
+      badge: "Translasi T(-6,0)",
+      canvasLabel: "Obj 3 · Translasi T(-6,0)",
+      originDesc: "Berasal dari Objek 1 (Gunung Utama)",
+      transExplain: "Mengalami TRANSLASI (Pergeseran) sejauh 6 satuan ke kiri T(-6,0)",
+      formula: "Rumus: (x, y) → (x - 6, y)  |  A(1,1) → A''(-5,1)",
+      color: "#235850",
+      points: [{ label: "A''", x: -5, y: 1, dx: -48, dy: -22 }, { label: "B''", x: -1, y: 1, dx: 46, dy: -22 }, { label: "C''", x: -3, y: 5, dx: 0, dy: -28 }]
+    },
+    {
+      id: 4,
+      key: "4",
+      short: "Pantulan Utama",
+      name: "4. Pantulan Gunung Utama",
+      kind: "reflection_mountain",
+      type: "refleksi",
+      badge: "Refleksi Sumbu-X",
+      canvasLabel: "Obj 4 · Refleksi Sumbu-X",
+      originDesc: "Berasal dari Objek 1 (Gunung Utama)",
+      transExplain: "Mengalami REFLEKSI (Pencerminan) terhadap Sumbu-X (Permukaan Danau)",
+      formula: "Rumus: (x, y) → (x, -y)  |  C(3,5) → C₁(3,-5)",
+      color: "#224B4D",
+      isWater: true,
+      points: [{ label: "A₁", x: 1, y: -1, dx: -44, dy: 24 }, { label: "B₁", x: 5, y: -1, dx: -36, dy: 24 }, { label: "C₁", x: 3, y: -5, dx: 0, dy: 28 }]
+    },
+    {
+      id: 5,
+      key: "5",
+      short: "Pantulan Kanan",
+      name: "5. Pantulan Gunung Kanan",
+      kind: "reflection_mountain",
+      type: "refleksi",
+      badge: "Refleksi Sumbu-X",
+      canvasLabel: "Obj 5 · Refleksi Sumbu-X",
+      originDesc: "Berasal dari Objek 2 (Gunung Kanan)",
+      transExplain: "Mengalami REFLEKSI (Pencerminan) terhadap Sumbu-X (Permukaan Danau)",
+      formula: "Rumus: (x, y) → (x, -y)  |  C'(8,5) → C₂(8,-5)",
+      color: "#28585A",
+      isWater: true,
+      points: [{ label: "A₂", x: 6, y: -1, dx: 38, dy: 24 }, { label: "B₂", x: 10, y: -1, dx: 46, dy: 24 }, { label: "C₂", x: 8, y: -5, dx: 0, dy: 28 }]
+    },
+    {
+      id: 6,
+      key: "6",
+      short: "Pantulan Kiri",
+      name: "6. Pantulan Gunung Kiri",
+      kind: "reflection_mountain",
+      type: "refleksi",
+      badge: "Refleksi Sumbu-X",
+      canvasLabel: "Obj 6 · Refleksi Sumbu-X",
+      originDesc: "Berasal dari Objek 3 (Gunung Kiri)",
+      transExplain: "Mengalami REFLEKSI (Pencerminan) terhadap Sumbu-X (Permukaan Danau)",
+      formula: "Rumus: (x, y) → (x, -y)  |  C''(-3,5) → C₃(-3,-5)",
+      color: "#1B3D3F",
+      isWater: true,
+      points: [{ label: "A₃", x: -5, y: -1, dx: -48, dy: 24 }, { label: "B₃", x: -1, y: -1, dx: 44, dy: 24 }, { label: "C₃", x: -3, y: -5, dx: 0, dy: 28 }]
+    },
+    {
+      id: 7,
+      key: "7",
+      short: "Bintang Kecil",
+      name: "7. Bintang Kecil",
+      kind: "star",
+      type: "awal",
+      badge: "Objek Awal 2",
+      canvasLabel: "Obj 7 · Objek Awal (Belah Ketupat)",
+      originDesc: "Bangun Dasar Kedua (Belah Ketupat)",
+      transExplain: "Objek Awal (Belum mengalami transformasi)",
+      formula: "Titik Asal: D(2,6), E(3,7), F(2,8), G(1,7)",
+      color: "#F59E0B",
+      points: [{ label: "D", x: 2, y: 6, dx: -44, dy: 18 }, { label: "E", x: 3, y: 7, dx: 52, dy: 0 }, { label: "F", x: 2, y: 8, dx: 0, dy: -26 }, { label: "G", x: 1, y: 7, dx: -52, dy: 0 }]
+    },
+    {
+      id: 8,
+      key: "8",
+      short: "Bintang Besar",
+      name: "8. Bintang Besar",
+      kind: "star",
+      type: "dilatasi",
+      badge: "Dilatasi [O, k=2]",
+      canvasLabel: "Obj 8 · Dilatasi [O, k=2]",
+      originDesc: "Berasal dari Objek 7 (Bintang Kecil)",
+      transExplain: "Mengalami DILATASI (Perubahan Ukuran) pusat O(0,0) dengan Faktor Skala k = 2",
+      formula: "Rumus: (x, y) → (2x, 2y)  |  D(2,6) → D'(4,12)",
+      color: "#FBBF24",
+      points: [{ label: "D'", x: 4, y: 12, dx: 0, dy: 28 }, { label: "E'", x: 6, y: 14, dx: 56, dy: 0 }, { label: "F'", x: 4, y: 16, dx: 0, dy: -26 }, { label: "G'", x: 2, y: 14, dx: -56, dy: 0 }]
+    },
+    {
+      id: 9,
+      key: "9",
+      short: "Mercusuar Kanan",
+      name: "9. Mercusuar Kanan",
+      kind: "lighthouse",
+      beamDir: -1,
+      type: "awal",
+      badge: "Objek Awal 3",
+      canvasLabel: "Obj 9 · Objek Awal (Persegi Panjang)",
+      originDesc: "Bangun Dasar Ketiga (Persegi Panjang)",
+      transExplain: "Objek Awal (Belum mengalami transformasi)",
+      formula: "Titik Asal: H(11,1), I(12,1), J(12,6), K(11,6)",
+      color: "#C04A22",
+      points: [{ label: "H", x: 11, y: 1, dx: -44, dy: 24 }, { label: "I", x: 12, y: 1, dx: 52, dy: -10 }, { label: "J", x: 12, y: 6, dx: 52, dy: -18 }, { label: "K", x: 11, y: 6, dx: -48, dy: -18 }]
+    },
+    {
+      id: 10,
+      key: "0",
+      short: "Mercusuar Kiri",
+      name: "10. Mercusuar Kiri",
+      kind: "lighthouse",
+      beamDir: 1,
+      type: "refleksi",
+      badge: "Refleksi Sumbu-Y",
+      canvasLabel: "Obj 10 · Refleksi Sumbu-Y",
+      originDesc: "Berasal dari Objek 9 (Mercusuar Kanan)",
+      transExplain: "Mengalami REFLEKSI (Pencerminan) terhadap Sumbu-Y (Garis Tengah Lembah)",
+      formula: "Rumus: (x, y) → (-x, y)  |  H(11,1) → H'(-11,1)",
+      color: "#C04A22",
+      points: [{ label: "H'", x: -11, y: 1, dx: 46, dy: 24 }, { label: "I'", x: -12, y: 1, dx: -56, dy: -10 }, { label: "J'", x: -12, y: 6, dx: -56, dy: -18 }, { label: "K'", x: -11, y: 6, dx: 50, dy: -18 }]
+    }
+  ];
+
+  // ============================================================================
+  // FUNGSI GAMBAR OBJEK STANDAR 2D VECTOR GAME ART (TETAP PRESISI GEOMETRIS)
+  // ============================================================================
+  function drawStyledObject(targetCtx, o, pts, isFoc, showArt) {
+    targetCtx.save();
+
+    // Path dasar poligon sesuai koordinat
+    const tracePoly = () => {
+      targetCtx.beginPath();
+      pts.forEach((p, i) => i === 0 ? targetCtx.moveTo(p.px, p.py) : targetCtx.lineTo(p.px, p.py));
+      targetCtx.closePath();
+    };
+
+    if (!showArt) {
+      // Mode Geometri Murni
+      tracePoly();
+      targetCtx.fillStyle = o.color;
+      targetCtx.fill();
+      targetCtx.lineWidth = isFoc ? 4.5 : 2.2;
+      targetCtx.strokeStyle = isFoc ? '#FF5722' : '#182022';
+      targetCtx.stroke();
+      targetCtx.restore();
+      return;
+    }
+
+    // Mode Standar 2D Game Art
+    if (o.kind === 'mountain') {
+      const [pA, pB, pC] = pts; // pC adalah puncak
+      const midBaseX = (pA.px + pB.px) / 2;
+      const midBaseY = (pA.py + pB.py) / 2;
+
+      // Gradasi warna gunung
+      const grad = targetCtx.createLinearGradient(pC.px, pC.py, midBaseX, midBaseY);
+      grad.addColorStop(0, '#4E9A8E');
+      grad.addColorStop(1, '#1B433E');
+      tracePoly();
+      targetCtx.fillStyle = grad;
+      targetCtx.fill();
+
+      // Belahan bayangan lereng kanan (3D Low-Poly Facet)
+      targetCtx.beginPath();
+      targetCtx.moveTo(pC.px, pC.py);
+      targetCtx.lineTo(midBaseX + (pB.px - pA.px) * 0.06, midBaseY);
+      targetCtx.lineTo(pB.px, pB.py);
+      targetCtx.closePath();
+      targetCtx.fillStyle = 'rgba(10, 25, 28, 0.32)';
+      targetCtx.fill();
+
+      // Tudung salju / cahaya senja di puncak gunung
+      const s = 0.34;
+      const sAx = pC.px + (pA.px - pC.px) * s;
+      const sAy = pC.py + (pA.py - pC.py) * s;
+      const sBx = pC.px + (pB.px - pC.px) * s;
+      const sBy = pC.py + (pB.py - pC.py) * s;
+      const sMx = (sAx + sBx) / 2;
+      const sMy = (sAx + sBx) ? (sAy + sBy) / 2 + 6 : sAy;
+
+      targetCtx.beginPath();
+      targetCtx.moveTo(pC.px, pC.py);
+      targetCtx.lineTo(sAx, sAy);
+      targetCtx.lineTo(sMx, sMy);
+      targetCtx.lineTo(sBx, sBy);
+      targetCtx.closePath();
+      targetCtx.fillStyle = 'rgba(255, 243, 214, 0.85)';
+      targetCtx.fill();
+
+    } else if (o.kind === 'reflection_mountain') {
+      const [pA, pB, pC] = pts; // pC adalah puncak bawah di air
+      const midBaseX = (pA.px + pB.px) / 2;
+      const midBaseY = (pA.py + pB.py) / 2;
+
+      const grad = targetCtx.createLinearGradient(midBaseX, midBaseY, pC.px, pC.py);
+      grad.addColorStop(0, 'rgba(46, 111, 101, 0.65)');
+      grad.addColorStop(1, 'rgba(15, 38, 42, 0.25)');
+      tracePoly();
+      targetCtx.fillStyle = grad;
+      targetCtx.fill();
+
+      // Garis-garis riak air horizontal di dalam segitiga pantulan
+      targetCtx.save();
+      tracePoly();
+      targetCtx.clip();
+      targetCtx.strokeStyle = 'rgba(255, 240, 200, 0.22)';
+      targetCtx.lineWidth = 1.6;
+      for (let ry = midBaseY + 10; ry < pC.py; ry += 14) {
+        targetCtx.beginPath();
+        targetCtx.moveTo(Math.min(pA.px, pB.px), ry);
+        targetCtx.lineTo(Math.max(pA.px, pB.px), ry);
+        targetCtx.stroke();
+      }
+      targetCtx.restore();
+
+    } else if (o.kind === 'star') {
+      const cx = pts.reduce((s, p) => s + p.px, 0) / pts.length;
+      const cy = pts.reduce((s, p) => s + p.py, 0) / pts.length;
+      const radius = Math.hypot(pts[0].px - cx, pts[0].py - cy);
+
+      // Pendaran cahaya bintang (Outer Glow)
+      const glow = targetCtx.createRadialGradient(cx, cy, 2, cx, cy, radius * 1.9);
+      glow.addColorStop(0, 'rgba(254, 240, 138, 0.85)');
+      glow.addColorStop(0.5, 'rgba(245, 158, 11, 0.28)');
+      glow.addColorStop(1, 'rgba(245, 158, 11, 0)');
+      targetCtx.fillStyle = glow;
+      targetCtx.beginPath();
+      targetCtx.arc(cx, cy, radius * 1.9, 0, Math.PI * 2);
+      targetCtx.fill();
+
+      // Badan Belah Ketupat
+      const stGrad = targetCtx.createLinearGradient(cx, cy - radius, cx, cy + radius);
+      stGrad.addColorStop(0, '#FEF08A');
+      stGrad.addColorStop(0.5, '#FBBF24');
+      stGrad.addColorStop(1, '#D97706');
+      tracePoly();
+      targetCtx.fillStyle = stGrad;
+      targetCtx.fill();
+
+      // Inti Berlian Putih di Dalam Belah Ketupat
+      targetCtx.beginPath();
+      pts.forEach((p, i) => {
+        const ix = cx + (p.px - cx) * 0.48;
+        const iy = cy + (p.py - cy) * 0.48;
+        i === 0 ? targetCtx.moveTo(ix, iy) : targetCtx.lineTo(ix, iy);
+      });
+      targetCtx.closePath();
+      targetCtx.fillStyle = 'rgba(255, 255, 255, 0.78)';
+      targetCtx.fill();
+
+    } else if (o.kind === 'lighthouse') {
+      const xs = pts.map(p => p.px);
+      const ys = pts.map(p => p.py);
+      const minX = Math.min(...xs), maxX = Math.max(...xs);
+      const minY = Math.min(...ys), maxY = Math.max(...ys);
+      const w = maxX - minX, h = maxY - minY;
+      const cx = (minX + maxX) / 2;
+
+      // Sorot lampu mercusuar ke arah tengah danau
+      const dir = o.beamDir || -1;
+      const lanternY = minY - h * 0.08;
+      const beamGrad = targetCtx.createLinearGradient(cx, lanternY, cx + dir * w * 6.5, lanternY);
+      beamGrad.addColorStop(0, 'rgba(254, 240, 138, 0.55)');
+      beamGrad.addColorStop(1, 'rgba(254, 240, 138, 0)');
+      targetCtx.fillStyle = beamGrad;
+      targetCtx.beginPath();
+      targetCtx.moveTo(cx, lanternY);
+      targetCtx.lineTo(cx + dir * w * 6.5, lanternY - h * 0.35);
+      targetCtx.lineTo(cx + dir * w * 6.5, lanternY + h * 0.28);
+      targetCtx.closePath();
+      targetCtx.fill();
+
+      // Ruang Lampu (Lantern Room) & Kubah Atap di atas persegi panjang
+      targetCtx.fillStyle = '#FEF08A';
+      targetCtx.fillRect(minX + w * 0.15, minY - h * 0.14, w * 0.7, h * 0.14);
+      targetCtx.strokeStyle = '#1E293B';
+      targetCtx.lineWidth = 1.5;
+      targetCtx.strokeRect(minX + w * 0.15, minY - h * 0.14, w * 0.7, h * 0.14);
+
+      targetCtx.beginPath();
+      targetCtx.moveTo(minX - 3, minY);
+      targetCtx.lineTo(maxX + 3, minY);
+      targetCtx.lineWidth = 3;
+      targetCtx.strokeStyle = '#1E293B';
+      targetCtx.stroke();
+
+      targetCtx.beginPath();
+      targetCtx.moveTo(minX + w * 0.08, minY - h * 0.14);
+      targetCtx.lineTo(cx, minY - h * 0.25);
+      targetCtx.lineTo(maxX - w * 0.08, minY - h * 0.14);
+      targetCtx.closePath();
+      targetCtx.fillStyle = '#991B1B';
+      targetCtx.fill();
+
+      // Badan Utama Persegi Panjang dengan Belang Merah-Putih Khas Mercusuar
+      targetCtx.save();
+      tracePoly();
+      targetCtx.clip();
+      const stripes = 5;
+      for (let i = 0; i < stripes; i++) {
+        targetCtx.fillStyle = (i % 2 === 0) ? '#C04A22' : '#FAF7F2';
+        targetCtx.fillRect(minX, minY + (h / stripes) * i, w, h / stripes + 1);
+      }
+      // Efek bayangan silinder 3D di tepi
+      const cyl = targetCtx.createLinearGradient(minX, minY, maxX, minY);
+      cyl.addColorStop(0, 'rgba(0,0,0,0.18)');
+      cyl.addColorStop(0.35, 'rgba(255,255,255,0.12)');
+      cyl.addColorStop(1, 'rgba(0,0,0,0.32)');
+      targetCtx.fillStyle = cyl;
+      targetCtx.fillRect(minX, minY, w, h);
+
+      // Pintu & Jendela Kecil
+      targetCtx.fillStyle = '#1E293B';
+      targetCtx.fillRect(cx - w * 0.16, maxY - h * 0.16, w * 0.32, h * 0.16);
+      targetCtx.fillRect(cx - w * 0.12, minY + h * 0.24, w * 0.24, h * 0.1);
+      targetCtx.restore();
+    }
+
+    // Garis Tepi Geometri (Outline Presisi sesuai Titik Sudut)
+    tracePoly();
+    targetCtx.lineWidth = isFoc ? 4.5 : 2.2;
+    targetCtx.strokeStyle = isFoc ? '#FF5722' : 'rgba(255, 255, 255, 0.92)';
+    targetCtx.stroke();
+
+    targetCtx.restore();
+  }
+
+  // ============================================================================
+  // KANVAS MINI DI SLIDE 2 (KHUSUS 3 OBJEK AWAL — ZOOM KUADRAN I)
+  // ============================================================================
+  const miniCanvas = document.getElementById('miniCanvas');
+  const mctx = miniCanvas.getContext('2d');
+  const M_UNIT = 54;
+  const M_OX = 85;
+  const M_OY = 490;
+  let miniFocusedId = null;
+
+  function msx(x) { return M_OX + x * M_UNIT; }
+  function msy(y) { return M_OY - y * M_UNIT; }
+
+  function focusMiniObj(id) {
+    miniFocusedId = (miniFocusedId === id) ? null : id;
+
+    [1, 7, 9].forEach(oid => {
+      const card = document.getElementById(`miniCard-${oid}`);
+      const btn = document.getElementById(`btnMini-${oid}`);
+      if (card) card.classList.toggle('active', miniFocusedId === oid);
+      if (btn) btn.classList.toggle('active', miniFocusedId === oid);
+    });
+    document.getElementById('btnMiniAll').classList.toggle('active', miniFocusedId === null);
+
+    const st = document.getElementById('miniStatus');
+    if (miniFocusedId === null) {
+      st.textContent = 'Menampilkan ke-3 Bangun Datar Awal pada Kuadran I';
+    } else {
+      const o = OBJECTS.find(x => x.id === miniFocusedId);
+      st.textContent = `${o.name} — ${o.formula}`;
+    }
+
+    renderMiniScene();
+  }
+
+  function initMiniCanvasUI() {
+    miniCanvas.addEventListener('mousemove', (e) => {
+      const r = miniCanvas.getBoundingClientRect();
+      const px = (e.clientX - r.left) * (miniCanvas.width / r.width);
+      const py = (e.clientY - r.top) * (miniCanvas.height / r.height);
+      const mx = Math.round((px - M_OX) / M_UNIT);
+      const my = Math.round((M_OY - py) / M_UNIT);
+      document.getElementById('miniCursor').textContent = `Koordinat: (${mx}, ${my})`;
+    });
+
+    miniCanvas.addEventListener('click', (e) => {
+      const r = miniCanvas.getBoundingClientRect();
+      const px = (e.clientX - r.left) * (miniCanvas.width / r.width);
+      const py = (e.clientY - r.top) * (miniCanvas.height / r.height);
+      const baseObjs = OBJECTS.filter(o => o.type === 'awal');
+      let best = null, minD = 90;
+      baseObjs.forEach(o => {
+        const cx = o.points.reduce((s, p) => s + msx(p.x), 0) / o.points.length;
+        const cy = o.points.reduce((s, p) => s + msy(p.y), 0) / o.points.length;
+        const d = Math.hypot(px - cx, py - cy);
+        if (d < minD) { minD = d; best = o.id; }
+      });
+      focusMiniObj(best);
+    });
+  }
+
+  function renderMiniScene() {
+    mctx.clearRect(0, 0, miniCanvas.width, miniCanvas.height);
+
+    // 1. Latar Langit Senja & Air Danau di Kuadran I
+    const sky = mctx.createLinearGradient(0, 0, 0, M_OY);
+    sky.addColorStop(0.0, '#0D1726');
+    sky.addColorStop(0.5, '#2A3F5A');
+    sky.addColorStop(0.85, '#8E5A55');
+    sky.addColorStop(1.0, '#E2995E');
+    mctx.fillStyle = sky;
+    mctx.fillRect(0, 0, miniCanvas.width, M_OY);
+
+    mctx.fillStyle = '#182827';
+    mctx.fillRect(0, msy(1), miniCanvas.width, M_OY - msy(1));
+
+    mctx.fillStyle = '#243B40';
+    mctx.fillRect(0, M_OY, miniCanvas.width, miniCanvas.height - M_OY);
+
+    // 2. Grid Kartesius Kuadran I
+    mctx.lineWidth = 1;
+    for (let x = -1; x <= 15; x++) {
+      mctx.strokeStyle = (x % 5 === 0) ? 'rgba(255,248,235,0.22)' : 'rgba(255,248,235,0.07)';
+      mctx.beginPath(); mctx.moveTo(msx(x), 0); mctx.lineTo(msx(x), miniCanvas.height); mctx.stroke();
+    }
+    for (let y = -1; y <= 9; y++) {
+      mctx.strokeStyle = (y % 5 === 0) ? 'rgba(255,248,235,0.22)' : 'rgba(255,248,235,0.07)';
+      mctx.beginPath(); mctx.moveTo(0, msy(y)); mctx.lineTo(miniCanvas.width, msy(y)); mctx.stroke();
+    }
+
+    mctx.strokeStyle = 'rgba(255,248,235,0.88)';
+    mctx.lineWidth = 2.2;
+    mctx.beginPath();
+    mctx.moveTo(0, M_OY); mctx.lineTo(miniCanvas.width, M_OY);
+    mctx.moveTo(M_OX, 0); mctx.lineTo(M_OX, miniCanvas.height);
+    mctx.stroke();
+
+    mctx.font = '600 11px "JetBrains Mono", monospace';
+    mctx.fillStyle = 'rgba(255,248,235,0.85)';
+    mctx.textAlign = 'center';
+    for (let x = 1; x <= 14; x++) mctx.fillText(x, msx(x), M_OY + 16);
+    mctx.textAlign = 'right';
+    for (let y = 1; y <= 8; y++) mctx.fillText(y, M_OX - 8, msy(y) + 4);
+    mctx.fillText('O(0,0)', M_OX - 8, M_OY + 16);
+
+    mctx.font = '700 11px "JetBrains Mono", monospace';
+    mctx.textAlign = 'right';
+    mctx.fillText('SUMBU-X', miniCanvas.width - 14, M_OY - 8);
+    mctx.textAlign = 'left';
+    mctx.fillText('SUMBU-Y', M_OX + 10, 20);
+
+    // 3. Gambar 3 Bangun Datar Awal dengan Visual Standar Baru
+    const baseObjs = OBJECTS.filter(o => o.type === 'awal');
+    baseObjs.forEach(o => {
+      const isFoc = (miniFocusedId === o.id);
+      const isDim = (miniFocusedId !== null && !isFoc);
+      const pts = o.points.map(p => ({ px: msx(p.x), py: msy(p.y), ...p }));
+
+      mctx.save();
+      if (isDim) mctx.globalAlpha = 0.28;
+
+      drawStyledObject(mctx, o, pts, isFoc, true);
+
+      const cx = pts.reduce((s, p) => s + p.px, 0) / pts.length;
+      const cy = pts.reduce((s, p) => s + p.py, 0) / pts.length;
+      const shortName = o.id === 1 ? 'Segitiga (Gunung)' : (o.id === 7 ? 'Belah Ketupat (Bintang)' : 'Persegi Panjang (Mercusuar)');
+      mctx.font = '700 11px "Plus Jakarta Sans", sans-serif';
+      const bw = mctx.measureText(shortName).width + 14;
+
+      mctx.fillStyle = isFoc ? '#C04A22' : 'rgba(20, 26, 28, 0.88)';
+      mctx.beginPath(); mctx.roundRect(cx - bw / 2, cy - 11, bw, 22, 4); mctx.fill();
+      mctx.strokeStyle = 'rgba(255,255,255,0.45)'; mctx.lineWidth = 1; mctx.stroke();
+      mctx.fillStyle = '#FFF'; mctx.textAlign = 'center';
+      mctx.fillText(shortName, cx, cy + 4);
+      mctx.restore();
+    });
+
+    // 4. Gambar Titik Sudut & Koordinat
+    baseObjs.forEach(o => {
+      if (miniFocusedId !== null && o.id !== miniFocusedId) return;
+      o.points.forEach(p => {
+        const px = msx(p.x), py = msy(p.y);
+        const lx = px + p.dx * 0.85, ly = py + p.dy * 0.85;
+        const txt = `${p.label}(${p.x},${p.y})`;
+        mctx.font = '600 11px "JetBrains Mono", monospace';
+        const tw = mctx.measureText(txt).width + 10;
+
+        mctx.strokeStyle = 'rgba(255,250,240,0.85)'; mctx.lineWidth = 1.2;
+        mctx.beginPath(); mctx.moveTo(px, py); mctx.lineTo(lx, ly); mctx.stroke();
+
+        mctx.fillStyle = '#FFF'; mctx.beginPath(); mctx.arc(px, py, 4, 0, Math.PI * 2); mctx.fill();
+        mctx.fillStyle = 'rgba(255,253,249,0.96)';
+        mctx.beginPath(); mctx.roundRect(lx - tw / 2, ly - 9, tw, 18, 4); mctx.fill();
+        mctx.fillStyle = '#182022'; mctx.textAlign = 'center';
+        mctx.fillText(txt, lx, ly + 4);
+      });
+    });
+  }
+
+  // ============================================================================
+  // KANVAS INTERAKTIF PENUH LEMBAH SENJA (SLIDE 4) + KEYBOARD & MENU FULLSCREEN
+  // ============================================================================
+  const canvas = document.getElementById('mainCanvas');
+  const ctx = canvas.getContext('2d');
+  const UNIT = 46;
+  const OX = 960;
+  const OY = 790;
+
+  let canvasStage = 3;
+  let focusedId = null;
+
+  function sx(x) { return OX + x * UNIT; }
+  function sy(y) { return OY - y * UNIT; }
+
+  function initCanvasUI() {
+    const holder = document.getElementById('objectButtons');
+    const drawerList = document.getElementById('fsDrawerList');
+    const quickBar = document.getElementById('quickKeyBar');
+
+    holder.innerHTML = '';
+    drawerList.innerHTML = '';
+    quickBar.innerHTML = '';
+
+    OBJECTS.forEach(o => {
+      const pts = o.points.map(p => `${p.label}(${p.x},${p.y})`).join(' ');
+
+      // 1. Tombol di Daftar Kanan Slide 4
+      const btn = document.createElement('button');
+      btn.className = 'obj-row-btn';
+      btn.id = `obtn-${o.id}`;
+      btn.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>${o.name} <span style="font-family:'JetBrains Mono'; font-size:10px; color:var(--ink-light);">[Key ${o.key}]</span></strong>
+          <span class="tag-pill ${o.type}" style="font-size:9.5px; padding:1px 6px;">${o.badge}</span>
+        </div>
+        <div style="font-size:10.5px; color:var(--rust); font-weight:600; margin-top:2px;">${o.originDesc}</div>
+        <div style="font-family:'JetBrains Mono'; font-size:10px; color:var(--ink-mid); margin-top:2px;">${pts}</div>
+      `;
+      btn.onclick = () => focusObj(o.id === focusedId ? null : o.id);
+      holder.appendChild(btn);
+
+      // 2. Item di Floating Drawer Menu (Untuk Mode Fullscreen)
+      const dItem = document.createElement('button');
+      dItem.className = 'fs-drawer-item';
+      dItem.id = `fsobtn-${o.id}`;
+      dItem.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong>${o.name}</strong>
+          <span class="tag-pill ${o.type}" style="font-size:9px; padding:1px 6px;">Key ${o.key} · ${o.badge}</span>
+        </div>
+        <div style="font-size:10.5px; color:#FDBA74; margin-top:2px;">${o.transExplain}</div>
+        <div style="font-family:'JetBrains Mono'; font-size:10px; color:#94A3B8; margin-top:2px;">${pts}</div>
+      `;
+      dItem.onclick = () => focusObj(o.id === focusedId ? null : o.id);
+      drawerList.appendChild(dItem);
+
+      // 3. Tombol Pintasan Cepat 1-10 di Quickbar Atas Kanvas
+      const qBtn = document.createElement('button');
+      qBtn.className = 'key-obj-btn';
+      qBtn.id = `qbtn-${o.id}`;
+      qBtn.innerHTML = `<kbd>${o.key}</kbd> ${o.short}`;
+      qBtn.onclick = () => focusObj(o.id === focusedId ? null : o.id);
+      quickBar.appendChild(qBtn);
+    });
+
+    canvas.addEventListener('mousemove', (e) => {
+      const r = canvas.getBoundingClientRect();
+      const px = (e.clientX - r.left) * (canvas.width / r.width);
+      const py = (e.clientY - r.top) * (canvas.height / r.height);
+      const mx = Math.round((px - OX) / UNIT);
+      const my = Math.round((OY - py) / UNIT);
+      document.getElementById('cursorInfo').textContent = `Koordinat Kursor: (${mx}, ${my})`;
+    });
+
+    canvas.addEventListener('click', (e) => {
+      const r = canvas.getBoundingClientRect();
+      const px = (e.clientX - r.left) * (canvas.width / r.width);
+      const py = (e.clientY - r.top) * (canvas.height / r.height);
+      let best = null, minD = 95;
+      OBJECTS.forEach(o => {
+        const cx = o.points.reduce((s, p) => s + sx(p.x), 0) / o.points.length;
+        const cy = o.points.reduce((s, p) => s + sy(p.y), 0) / o.points.length;
+        const d = Math.hypot(px - cx, py - cy);
+        if (d < minD) { minD = d; best = o.id; }
+      });
+      focusObj(best === focusedId ? null : best);
+    });
+  }
+
+  function setCanvasStage(s) {
+    canvasStage = s;
+    [1, 2, 3].forEach(i => document.getElementById(`btnStage${i}`).classList.toggle('active', i === s));
+    updateTransformBanner();
+    renderScene();
+  }
+
+  function focusObj(id) {
+    focusedId = id;
+    // Jika memilih objek hasil transformasi saat masih di Tahap 1, otomatis pindah ke Tahap 3 agar objek terlihat
+    if (id !== null && canvasStage === 1) {
+      const chosen = OBJECTS.find(x => x.id === id);
+      if (chosen && chosen.type !== 'awal') {
+        canvasStage = 3;
+        [1, 2, 3].forEach(i => document.getElementById(`btnStage${i}`).classList.toggle('active', i === 3));
+      }
+    }
+
+    document.querySelectorAll('.obj-row-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.fs-drawer-item').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.key-obj-btn').forEach(b => b.classList.remove('active'));
+
+    if (id !== null) {
+      const b1 = document.getElementById(`obtn-${id}`);
+      const b2 = document.getElementById(`fsobtn-${id}`);
+      const b3 = document.getElementById(`qbtn-${id}`);
+      if (b1) { b1.classList.add('active'); b1.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
+      if (b2) { b2.classList.add('active'); b2.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
+      if (b3) b3.classList.add('active');
+    }
+    updateTransformBanner();
+    renderScene();
+  }
+
+  function cycleFocusObj(step) {
+    if (focusedId === null) {
+      focusObj(step > 0 ? 1 : 10);
+    } else {
+      let next = focusedId + step;
+      if (next > 10) next = 1;
+      if (next < 1) next = 10;
+      focusObj(next);
+    }
+  }
+
+  // KEYBOARD LISTENER LENGKAP (SLIDE & OBJEK 1-10 DI FULLSCREEN / SLIDE 4)
+  window.addEventListener('keydown', (e) => {
+    const isCanvasFs = (document.fullscreenElement === document.getElementById('canvasFullscreenBox'));
+
+    // Navigasi Slide (Jika TIDAK sedang Fullscreen Kanvas)
+    if (!isCanvasFs) {
+      if (e.key === 'ArrowRight') stepSlide(1);
+      if (e.key === 'ArrowLeft') stepSlide(-1);
+      if (e.key === 'n' || e.key === 'N') toggleScript();
+      if (e.key === 'f' || e.key === 'F') toggleFull();
+    }
+
+    // Kontrol Interaktif Kanvas (Aktif saat di Slide 4 ATAU saat Fullscreen Kanvas)
+    if (curSlide === 4 || isCanvasFs) {
+      if (e.key >= '1' && e.key <= '9') {
+        const id = Number(e.key);
+        focusObj(focusedId === id ? null : id);
+      } else if (e.key === '0') {
+        focusObj(focusedId === 10 ? null : 10);
+      } else if (e.key === 'r' || e.key === 'R') {
+        focusObj(null);
+      } else if (e.key === 'm' || e.key === 'M') {
+        toggleFsDrawer();
+      } else if (e.key === ']') {
+        cycleFocusObj(1);
+      } else if (e.key === '[') {
+        cycleFocusObj(-1);
+      } else if (e.key === 'q' || e.key === 'Q') {
+        setCanvasStage(1);
+      } else if (e.key === 'w' || e.key === 'W') {
+        setCanvasStage(2);
+      } else if (e.key === 'e' || e.key === 'E') {
+        setCanvasStage(3);
+      }
+    }
+  });
+
+  function updateTransformBanner() {
+    const badge = document.getElementById('tbBadge');
+    const title = document.getElementById('tbTitle');
+    const formula = document.getElementById('tbFormula');
+
+    if (focusedId !== null) {
+      const o = OBJECTS.find(x => x.id === focusedId);
+      badge.className = `tag-pill ${o.type}`;
+      badge.textContent = `Key [${o.key}] · ${o.badge}`;
+      title.textContent = `${o.name} — ${o.transExplain}`;
+      formula.textContent = o.formula;
+      return;
+    }
+
+    if (canvasStage === 1) {
+      badge.className = 'tag-pill awal';
+      badge.textContent = 'Tahap 1: Sebelum Transformasi';
+      title.textContent = 'Menampilkan 3 Bangun Datar Awal: Gunung Utama (Segitiga), Bintang Kecil (Belah Ketupat), Mercusuar Kanan (Persegi Panjang)';
+      formula.textContent = 'Tekan Key 1, 7, atau 9 untuk menyorot masing-masing Objek Awal';
+    } else if (canvasStage === 2) {
+      badge.className = 'tag-pill translasi';
+      badge.textContent = 'Tahap 2: Proses Transformasi';
+      title.textContent = 'Menampilkan Garis Pergeseran Translasi T(5,0) & T(-6,0), Cermin Sumbu-X & Sumbu-Y, serta Skala Dilatasi k=2';
+      formula.textContent = 'Translasi: (x+a, y+b) | Refleksi: (x,-y) & (-x,y) | Dilatasi: (2x, 2y)';
+    } else {
+      badge.className = 'tag-pill refleksi';
+      badge.textContent = 'Tahap 3: Sesudah Transformasi';
+      title.textContent = 'Hasil Akhir 10 Objek Utuh (3 Objek Awal + 7 Objek Hasil Transformasi)';
+      formula.textContent = 'Tekan tombol angka 1-9 / 0 di keyboard atau klik objek untuk sorotan detail';
+    }
+  }
+
+  function drawBadgeBox(x, y, text, bg, fg, borderCol) {
+    ctx.save();
+    ctx.setLineDash([]);
+    ctx.font = '700 12px "JetBrains Mono", monospace';
+    const w = ctx.measureText(text).width + 16;
+    ctx.fillStyle = bg;
+    ctx.beginPath(); ctx.roundRect(x - w / 2, y - 12, w, 24, 5); ctx.fill();
+    ctx.strokeStyle = borderCol || fg; ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.fillStyle = fg; ctx.textAlign = 'center'; ctx.fillText(text, x, y + 4);
+    ctx.restore();
+  }
+
+  function renderScene() {
+    const showArt = document.getElementById('chkArt').checked;
+    const showGrid = document.getElementById('chkGrid').checked;
+    const showCoords = document.getElementById('chkCoords').checked;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // 1. Latar Belakang Dunia Fantasi "Lembah Senja"
+    if (!showArt) {
+      ctx.fillStyle = '#FAF7F2'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#EBE6DC'; ctx.fillRect(0, OY, canvas.width, canvas.height - OY);
+    } else {
+      const sky = ctx.createLinearGradient(0, 0, 0, OY);
+      sky.addColorStop(0.0, '#070D19');
+      sky.addColorStop(0.38, '#1D2E4A');
+      sky.addColorStop(0.68, '#6B4957');
+      sky.addColorStop(0.88, '#C06C4B');
+      sky.addColorStop(1.0, '#F3A861');
+      ctx.fillStyle = sky; ctx.fillRect(0, 0, canvas.width, OY);
+
+      // Matahari Senja di Horizon Lembah
+      const sunGlow = ctx.createRadialGradient(OX, sy(2.2), 12, OX, sy(2.2), 340);
+      sunGlow.addColorStop(0, 'rgba(255, 247, 210, 0.82)');
+      sunGlow.addColorStop(0.45, 'rgba(251, 176, 91, 0.32)');
+      sunGlow.addColorStop(1, 'rgba(248, 178, 96, 0)');
+      ctx.fillStyle = sunGlow;
+      ctx.beginPath(); ctx.arc(OX, sy(2.2), 340, 0, Math.PI * 2); ctx.fill();
+
+      // Siluet Bukit Kejauhan & Daratan Tepi Danau (y = 0 s/d y = 1)
+      ctx.fillStyle = '#162528';
+      ctx.fillRect(0, sy(1), canvas.width, OY - sy(1));
+
+      // Permukaan Air Danau (y < 0)
+      const water = ctx.createLinearGradient(0, OY, 0, canvas.height);
+      water.addColorStop(0, '#2F5258');
+      water.addColorStop(0.5, '#193138');
+      water.addColorStop(1, '#091318');
+      ctx.fillStyle = water; ctx.fillRect(0, OY, canvas.width, canvas.height - OY);
+
+      // Kilau pantulan cahaya senja di permukaan danau
+      ctx.fillStyle = 'rgba(253, 186, 116, 0.14)';
+      for (let i = 0; i < 6; i++) {
+        const rw = 260 - i * 32;
+        ctx.fillRect(OX - rw / 2, OY + 18 + i * 38, rw, 4);
+      }
+    }
+
+    // 2. Grid Kartesius
+    if (showGrid) {
+      const maj = showArt ? 'rgba(255,248,235,0.16)' : 'rgba(24,32,34,0.12)';
+      const min = showArt ? 'rgba(255,248,235,0.05)' : 'rgba(24,32,34,0.04)';
+      const ax = showArt ? 'rgba(255,248,235,0.82)' : '#182022';
+
+      ctx.lineWidth = 1;
+      for (let x = -20; x <= 20; x++) {
+        ctx.strokeStyle = (x % 5 === 0) ? maj : min;
+        ctx.beginPath(); ctx.moveTo(sx(x), 0); ctx.lineTo(sx(x), canvas.height); ctx.stroke();
+      }
+      for (let y = -6; y <= 17; y++) {
+        ctx.strokeStyle = (y % 5 === 0) ? maj : min;
+        ctx.beginPath(); ctx.moveTo(0, sy(y)); ctx.lineTo(canvas.width, sy(y)); ctx.stroke();
+      }
+      ctx.strokeStyle = ax; ctx.lineWidth = 2.2;
+      ctx.beginPath(); ctx.moveTo(0, OY); ctx.lineTo(canvas.width, OY);
+      ctx.moveTo(OX, 0); ctx.lineTo(OX, canvas.height); ctx.stroke();
+
+      ctx.font = '600 11px "JetBrains Mono", monospace';
+      ctx.fillStyle = showArt ? 'rgba(255,248,235,0.75)' : '#424F52';
+      ctx.textAlign = 'center';
+      for (let x = -18; x <= 18; x++) if (x !== 0) ctx.fillText(x, sx(x), OY + 15);
+      ctx.textAlign = 'right';
+      for (let y = -5; y <= 16; y++) if (y !== 0) ctx.fillText(y, OX - 8, sy(y) + 4);
+
+      ctx.font = '700 12px "JetBrains Mono", monospace';
+      ctx.fillStyle = ax;
+      ctx.textAlign = 'right';
+      ctx.fillText('SUMBU-X (Cermin Pantulan Air / y = 0)', canvas.width - 24, OY - 10);
+      ctx.textAlign = 'left';
+      ctx.fillText('SUMBU-Y (Cermin Mercusuar / x = 0)', OX + 12, 28);
+    }
+
+    // 3. Gambar 10 Objek dengan Desain Baru + Label Jenis Transformasi
+    let activeList = [];
+    OBJECTS.forEach(o => {
+      const ghost = (canvasStage === 1 && o.type !== 'awal');
+      if (!ghost) activeList.push(o);
+      const isFoc = (focusedId === o.id);
+      const isDim = (focusedId !== null && !isFoc);
+      const pts = o.points.map(p => ({ px: sx(p.x), py: sy(p.y), ...p }));
+
+      ctx.save();
+      if (ghost) ctx.globalAlpha = 0.14;
+      else if (isDim) ctx.globalAlpha = 0.24;
+
+      drawStyledObject(ctx, o, pts, isFoc, showArt);
+
+      const cx = pts.reduce((s, p) => s + p.px, 0) / pts.length;
+      const cy = pts.reduce((s, p) => s + p.py, 0) / pts.length;
+      const lbl = (isFoc || canvasStage === 2) ? o.canvasLabel : `[${o.key}] Obj ${o.id} (${o.badge})`;
+      ctx.font = '700 11px "Plus Jakarta Sans", sans-serif';
+      const bw = ctx.measureText(lbl).width + 14;
+
+      ctx.fillStyle = isFoc ? '#C04A22' : 'rgba(15, 23, 34, 0.88)';
+      ctx.beginPath(); ctx.roundRect(cx - bw / 2, cy - 11, bw, 22, 4); ctx.fill();
+      ctx.strokeStyle = isFoc ? '#FCD34D' : 'rgba(255,255,255,0.45)'; ctx.lineWidth = 1.2; ctx.stroke();
+      ctx.fillStyle = '#FFF'; ctx.textAlign = 'center';
+      ctx.fillText(lbl, cx, cy + 4);
+      ctx.restore();
+    });
+
+    // 4. Garis Vektor & Keterangan Transformasi (Muncul di Tahap 2 atau Saat Objek Diklik/Key)
+    if (canvasStage === 2 || focusedId !== null) {
+      const showAll = (canvasStage === 2 && focusedId === null);
+      ctx.save();
+      ctx.setLineDash([7, 5]); ctx.lineWidth = 2.6;
+
+      if (showAll || focusedId === 2 || focusedId === 1) {
+        ctx.strokeStyle = '#FF7043';
+        ctx.beginPath(); ctx.moveTo(sx(3), sy(5)); ctx.quadraticCurveTo(sx(5.5), sy(6.8), sx(8), sy(5)); ctx.stroke();
+        drawBadgeBox(sx(5.5), sy(6.3), 'Translasi T(5,0) : (x+5, y)', '#FBE9E2', '#C04A22');
+      }
+
+      if (showAll || focusedId === 3 || focusedId === 1) {
+        ctx.strokeStyle = '#FF7043';
+        ctx.beginPath(); ctx.moveTo(sx(3), sy(5)); ctx.quadraticCurveTo(sx(0), sy(6.8), sx(-3), sy(5)); ctx.stroke();
+        drawBadgeBox(sx(0), sy(6.3), 'Translasi T(-6,0) : (x-6, y)', '#FBE9E2', '#C04A22');
+      }
+
+      if (showAll || focusedId === 7 || focusedId === 8) {
+        ctx.strokeStyle = '#F2B63D';
+        [{x: 4, y: 16}, {x: 6, y: 14}, {x: 2, y: 14}].forEach(pt => {
+          ctx.beginPath(); ctx.moveTo(OX, OY); ctx.lineTo(sx(pt.x), sy(pt.y)); ctx.stroke();
+        });
+        drawBadgeBox(sx(3.3), sy(10.4), 'Dilatasi [O(0,0), k=2] : (2x, 2y)', '#FDF2DF', '#B07216');
+      }
+
+      if (showAll || focusedId === 9 || focusedId === 10) {
+        ctx.strokeStyle = '#26A69A';
+        ctx.beginPath(); ctx.moveTo(sx(11), sy(3.5)); ctx.lineTo(sx(-11), sy(3.5)); ctx.stroke();
+        drawBadgeBox(OX, sy(3.5), 'Refleksi Sumbu-Y : (x,y) → (-x,y)', '#E0F2EF', '#1E5E55');
+      }
+
+      if (showAll || [4, 5, 6].includes(focusedId)) {
+        ctx.strokeStyle = '#26A69A';
+        const rx = focusedId === 5 ? 8 : (focusedId === 6 ? -3 : 3);
+        ctx.beginPath(); ctx.moveTo(sx(rx), sy(5)); ctx.lineTo(sx(rx), sy(-5)); ctx.stroke();
+        drawBadgeBox(sx(rx), sy(-2.6), 'Refleksi Sumbu-X : (x,y) → (x,-y)', '#E0F2EF', '#1E5E55');
+      }
+
+      ctx.restore();
+    }
+
+    // 5. Titik Koordinat
+    if (showCoords) {
+      activeList.forEach(o => {
+        if (focusedId !== null && o.id !== focusedId) return;
+        o.points.forEach(p => {
+          const px = sx(p.x), py = sy(p.y);
+          const lx = px + p.dx, ly = py + p.dy;
+          const txt = `${p.label}(${p.x},${p.y})`;
+          ctx.font = '600 11.5px "JetBrains Mono", monospace';
+          const tw = ctx.measureText(txt).width + 12;
+
+          ctx.strokeStyle = 'rgba(255,250,240,0.85)'; ctx.lineWidth = 1.3;
+          ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(lx, ly); ctx.stroke();
+
+          ctx.fillStyle = '#FFF'; ctx.beginPath(); ctx.arc(px, py, 4, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = 'rgba(255,253,249,0.96)';
+          ctx.beginPath(); ctx.roundRect(lx - tw / 2, ly - 10, tw, 20, 4); ctx.fill();
+          ctx.fillStyle = '#182022'; ctx.textAlign = 'center';
+          ctx.fillText(txt, lx, ly + 4);
+        });
+      });
+    }
+  }
+
+  initMiniCanvasUI();
+  initCanvasUI();
+  goSlide(1);
+</script>
+
+</body>
+</html>
